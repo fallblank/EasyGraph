@@ -14,21 +14,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final PieGraph pie = (PieGraph) findViewById(R.id.pie);
-        pie.setDistance(22);
+        pie.setDistance(32);
         final TextView tv01 = (TextView) findViewById(R.id.tv01);
         final TextView tv02 = (TextView) findViewById(R.id.tv02);
-
 
         pie.setPieClickedListener(new PieGraph.PieClickedListener() {
             @Override public void onPieClicked(int index) {
                 GraphAdapter adapter = pie.getAdapter();
-                tv01.setText("selected:"+adapter.getName(index));
-                tv02.setText(String.format("percentage:%.2f",adapter.getPercent(index)));
+                tv01.setText("selected:" + adapter.getName(index));
+                tv02.setText(String.format("percentage:%.2f", adapter.getPercent(index)));
             }
         });
         pie.setAdapter(new GraphAdapter() {
             @Override public int getCount() {
-                return 3;
+                return 4;
             }
 
 
@@ -37,21 +36,37 @@ public class MainActivity extends AppCompatActivity {
                     return Color.RED;
                 } else if (index == 1) {
                     return Color.GREEN;
-                } else {
+                } else if (index == 2) {
                     return Color.YELLOW;
+                } else {
+                    return Color.BLUE;
                 }
             }
 
 
             @Override public String getName(int index) {
-                if (index==0) return "Red";
-                else if(index == 1) return "Greenn";
-                else return "Yellow";
+                if (index == 0) {
+                    return "Red";
+                } else if (index == 1) {
+                    return "Greenn";
+                } else if (index == 2) {
+                    return "Yellow";
+                } else {
+                    return "BLUE";
+                }
             }
 
 
             @Override public double getPercent(int index) {
-                return 1.0 / getCount();
+                if (index == 0) {
+                    return 1.0 / 4;
+                } else if (index == 1) {
+                    return 1.0 / 8;
+                } else if (index == 2) {
+                    return 1.0 / 6;
+                } else {
+                    return 1.0 - 1.0 / 4 - 1.0 / 6 - 1.0 / 8;
+                }
             }
         });
 
